@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 public class Result<T> implements Serializable {
 
-    private static final long serialVersionUID = 100000000000000002L;
+    private static final long serialVersionUID = 100000000000000000L;
 
     private String code;
     private String desc;
@@ -46,39 +46,32 @@ public class Result<T> implements Serializable {
 
     @Override
     public String toString() {
-        return Json.format(this);
+        return Json.serialize(this);
     }
 
     public static <T> Result<T> succ() {
-        return ins(Code.OK);
+        return ins(ECode.OK);
     }
 
     public static <T> Result<T> fail() {
-        return ins(Code.FAILURE);
-    }
-
-    public static <T> Result<T> fail(Code code) {
-        return ins(code);
-    }
-
-    public static <T> Result<T> fail(Result<?> result) {
-        return ins(result.getCode(), result.getDesc());
+        return ins(ECode.FAIL);
     }
 
     public static <T> Result<T> ins(Code code) {
-        return ins(code.getCode(), code.getDesc());
+        return ins(code, null);
     }
 
-    public static <T> Result<T> ins(String code, String desc) {
-        return ins(code, desc, null);
-    }
 
     public static <T> Result<T> ins(T t) {
-        return ins(Code.OK, t);
+        return ins(ECode.OK, t);
     }
 
     public static <T> Result<T> ins(Code code, T t) {
         return ins(code.getCode(), code.getDesc(), t);
+    }
+
+    public static <T> Result<T> ins(String code, String desc) {
+        return ins(code, desc, null);
     }
 
     public static <T> Result<T> ins(String code, String desc, T t) {
@@ -87,13 +80,10 @@ public class Result<T> implements Serializable {
 
     /** 用于判断当前Result 是否是成功的 */
     public boolean ok() {
-        return Code.OK.getCode().equals(this.code);
+        return ECode.OK.getCode().equals(this.code);
     }
 
-    public <A> A data() {
-        if (!ok() || data == null) {
-            return null;
-        }
-        return Json.parse(Json.format(this.data));
+    public T data() {
+        return !ok() || data == null ? null : this.data;
     }
 }

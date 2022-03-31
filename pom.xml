@@ -20,8 +20,6 @@
         <tk.mybatis.mapper.version>2.1.5</tk.mybatis.mapper.version>
         <com.auth0.jwt.version>3.8.3</com.auth0.jwt.version>
         <org.apache.poi.version>4.0.1</org.apache.poi.version>
-        <com.aliyun.sdk.core>4.3.3</com.aliyun.sdk.core>
-        <com.aliyun.sdk.oss>3.9.1</com.aliyun.sdk.oss>
     </properties>
 
     <dependencies>
@@ -60,20 +58,6 @@
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>${org.apache.poi.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.aliyun/aliyun-java-sdk-core -->
-        <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>aliyun-java-sdk-core</artifactId>
-            <version>${com.aliyun.sdk.core}</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.aliyun.oss/aliyun-sdk-oss -->
-        <dependency>
-            <groupId>com.aliyun.oss</groupId>
-            <artifactId>aliyun-sdk-oss</artifactId>
-            <version>${com.aliyun.sdk.oss}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
