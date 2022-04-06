@@ -137,7 +137,7 @@ public final class CompressUtil {
         return null;
     }
 
-    public static void main(String[] args) {
+    public static void main1(String[] args) {
         String path1 = "/data/code-server/code-server-3.8.1-amd64.rpm";
         String path2 = "/data/code-server/log.log";
         String path3 = "/data/workspace/bmw-card/bmw-card-h5/src/assets/banner.png";
@@ -146,7 +146,7 @@ public final class CompressUtil {
         byte[] srcBytes = FileUtil.file2Bytes(new File(path1));
         int srcLength = FileUtil.file2Base64(new File(path1)).length();
         System.out.println("文件原大小" + srcLength);
-        String str1 = deflater64(srcBytes);
+        String str1 = deflater(srcBytes);
         int defalterLength = str1.length();
         System.out.println("str压缩后[defalter]长度：" + defalterLength + "(" + defalterLength*100/(double)srcLength + "%)");
         String str2 = gzip(srcBytes);

@@ -21,9 +21,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.ser.std.DateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -42,7 +40,7 @@ import org.springframework.util.StringUtils;
  */
 public class Json {
 
-    private static final Logger logger = LoggerFactory.getLogger(Json.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Json.class);
     
     private static final ObjectMapper MAPPER = new ObjectMapper();
     /** 默认日期时间格式 */
@@ -90,34 +88,34 @@ public class Json {
     }
     
     /** 将Java对象转化为JSON字符串 */
-    public static String serialize(Object object) {
+    public static String toStr(Object object) {
         try {
             return object == null ? null
                     : object instanceof String ? (String) object : MAPPER.writeValueAsString(object);
         } catch (JsonProcessingException e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             return null;
         }
     }
 
     /** 将JSON字符串转化为Java对象 非集合 */
-    public static <T> T deserialize(String str, Class<T> clazz) {
+    public static <T> T parse(String str, Class<T> clazz) {
         try {
             return StringUtils.isEmpty(str) || clazz == null ? null
                     : String.class.equals(clazz) ? (T) str : MAPPER.readValue(str, clazz);
         } catch (JsonProcessingException e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             return null;
         }
     }
 
     /** 将JSON字符串转化为Java集合对象 */
-    public static <T> T deserialize(String str, TypeReference<T> typeReference) {
+    public static <T> T parse(String str, TypeReference<T> typeReference) {
         try {
             return StringUtils.isEmpty(str) || typeReference == null ? null
                     : String.class.equals(typeReference.getType()) ? (T) str : MAPPER.readValue(str, typeReference);
         } catch (JsonProcessingException e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             return null;
         }
     }
@@ -127,14 +125,8 @@ public class Json {
         try {
             return StringUtils.isEmpty(str) ? null : MAPPER.readTree(str);
         } catch (JsonProcessingException e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             return null;
         }
-    }
-
-    public static void main(String[] args) {
-        String s = "{\"name\":13, \"age\":15}";
-        Map<String, Integer> map = deserialize(s, new TypeReference<Map<String, Integer>>() {});
-        System.out.println(map);
     }
 }
