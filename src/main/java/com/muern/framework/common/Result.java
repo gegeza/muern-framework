@@ -46,15 +46,15 @@ public class Result<T> implements Serializable {
 
     @Override
     public String toString() {
-        return Json.serialize(this);
+        return Json.toStr(this);
     }
 
     public static <T> Result<T> succ() {
-        return ins(ECode.OK);
+        return ins(CodeImpl.OK);
     }
 
     public static <T> Result<T> fail() {
-        return ins(ECode.FAIL);
+        return ins(CodeImpl.FAIL);
     }
 
     public static <T> Result<T> ins(Code code) {
@@ -63,7 +63,7 @@ public class Result<T> implements Serializable {
 
 
     public static <T> Result<T> ins(T t) {
-        return ins(ECode.OK, t);
+        return ins(CodeImpl.OK, t);
     }
 
     public static <T> Result<T> ins(Code code, T t) {
@@ -80,7 +80,7 @@ public class Result<T> implements Serializable {
 
     /** 用于判断当前Result 是否是成功的 */
     public boolean ok() {
-        return ECode.OK.getCode().equals(this.code);
+        return CodeImpl.OK.getCode().equals(this.code);
     }
 
     public T data() {

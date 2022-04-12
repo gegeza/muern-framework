@@ -29,6 +29,7 @@ public class LoggerLevelController {
     
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggerLevelController.class);
 
+    /** logback日志框架对应的Binder */
     private static final String LOGBACK_BINDER = "ch.qos.logback.classic.util.ContextSelectorStaticBinder";
 
     /**
@@ -48,6 +49,10 @@ public class LoggerLevelController {
         }
     }
 
+    /**
+     * 查询日志包名及日志级别的对应关系集合
+     * @return Map<String, String> key:日志包名 value:日志级别
+     */
     @GetMapping(value = "maps")
     public Result<Map<String, String>> maps() {
         return Result.ins(getLoggerMap().entrySet().stream().filter(e -> {
@@ -61,6 +66,13 @@ public class LoggerLevelController {
         ));
     }
 
+    /**
+     * 修改日志级别
+     * @author gegeza
+     * @date 2022-04-07
+     * @param  loggerDto name:日志包名(例如com.muern.paying.mapper) level:日志级别(例如INFO/DEBUG)
+     * @return 修改结果
+     */
     @PostMapping(value = "change")
     public Result<Void> change(@RequestBody LoggerDto loggerDto) {
         Map<String, Logger> loggerMap = getLoggerMap();

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+    <!-- 从spring中获取配置，如获取不到会使用默认值 -->
+    <springProperty scope="context" name="LOG_HOME" source="muern.logger.path"/>
+    <springProperty scope="context" name="LOG_FILE_NAME" source="muern.logger.name"/>
+    <springProperty scope="context" name="LOG_LEVEL" source="logging.output.level"/>
+    <springProperty scope="context" name="LOG_MAX_SIZE" source="logging.file.max-size"/>
+    <springProperty scope="context" name="LOG_TOTAL_SIZE_CAP" source="logging.file.total-size-cap"/>
+    <springProperty scope="context" name="LOG_MAX_HISTORY" source="logging.file.max-history"/>
+    <!-- 输出样式 -->
+    <property name="pattern"
+              value="%d{HH:mm:ss.sss} %level %green([%t]) %boldMagenta(%c{5}[%L]):  %cyan(%m) %n"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${LOG_FILE_NAME}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/${LOG_FILE_NAME}-%d{yyyy-MM-dd}_%i.log.zip
+            </FileNamePattern>
+            <MaxHistory>${LOG_MAX_HISTORY:-30}</MaxHistory>
+            <MaxFileSize>${LOG_MAX_SIZE:-10MB}</MaxFileSize>
+            <totalSizeCap>${LOG_TOTAL_SIZE_CAP:-10GB}</totalSizeCap>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{HH:mm:ss.sss} %level [%t] %c{5}[%L]: %m %n</pattern>
+        </encoder>
+    </appender>
+    <!-- log output level -->
+    <root level="${LOG_LEVEL:-INFO}">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+
+    <logger name="org.springframework.boot.autoconfigure" level="error" />
+</configuration>

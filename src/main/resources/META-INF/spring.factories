@@ -1,0 +1,14 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  cn.d0x.bootstarter.config.DateConfig,\
+  cn.d0x.bootstarter.config.RedisConfig,\
+  cn.d0x.bootstarter.config.WebsocketConfig,\
+  cn.d0x.bootstarter.filter.CrosAndLoggerFilter,\
+  cn.d0x.bootstarter.filter.HttpMethodAndContentTypeFilter,\
+  cn.d0x.bootstarter.filter.JwtAuthFilter,\
+  cn.d0x.bootstarter.filter.ResubmitAndSignFilter,\
+  cn.d0x.bootstarter.controller.OssController,\
+  cn.d0x.bootstarter.controller.UploadController,\
+  cn.d0x.bootstarter.helper.JwtHelper,\
+  cn.d0x.bootstarter.helper.OssHelper,\
+  cn.d0x.bootstarter.helper.RedisHelper,\
+  cn.d0x.bootstarter.exception.BizExceptionHandler

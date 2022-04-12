@@ -4,7 +4,7 @@ package com.muern.framework.common;
  * @author gegeza
  * @date 2022/03/31
  */
-public enum ECode implements Code {
+public enum CodeImpl implements Code {
     OK("000000", "操作成功"),
     FAIL("000001", "操作失败"),
     ERR_PARAMS("000002", "参数错误"),
@@ -15,7 +15,7 @@ public enum ECode implements Code {
     private final String code;
     private final String desc;
 
-    ECode(String code, String desc) {
+    CodeImpl(String code, String desc) {
         this.code = code;
         this.desc = desc;
     }

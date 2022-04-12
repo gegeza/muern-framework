@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.Base64;
 import java.util.UUID;
 
-import com.muern.framework.common.ECode;
+import com.muern.framework.common.CodeImpl;
 import com.muern.framework.common.Result;
 import com.muern.framework.encrypt.Hash;
 import com.muern.framework.utils.FileUtil;
@@ -35,7 +35,7 @@ public class FileUploadController {
     public Result<String> upload(@RequestBody UploadDto dto) {
         //验证签名
         if (!dto.getSign().equalsIgnoreCase(Hash.sha256(dto.getTimestamp() + SIGN_KEY))){
-            return Result.ins(ECode.ERR_SIGN);
+            return Result.ins(CodeImpl.ERR_SIGN);
         }
         //定义文件名称
         String randomName = UUID.randomUUID().toString().replace("-", "");
